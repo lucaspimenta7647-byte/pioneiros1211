@@ -1,0 +1,123 @@
+public/index.html
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102c3a">
+  <title>Desafio Pioneiro — Sobe e Desce</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="page-glow glow-a"></div><div class="page-glow glow-b"></div>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Desafio Pioneiro">
+      <span class="brand-mark"><span>✦</span></span>
+      <span><strong>DESAFIO</strong><small>PIONEIRO</small></span>
+    </a>
+    <div class="top-chip"><span class="live-dot"></span> JOGO MULTIJOGADOR</div>
+  </header>
+
+  <main class="wrap">
+    <section id="entry" class="entry-layout">
+      <div class="intro">
+        <div class="eyebrow"><span class="eyebrow-line"></span> III SECÇÃO · PIONEIROS</div>
+        <h1>O caminho faz-se<br><em>em equipa.</em></h1>
+        <p class="intro-copy">Sobe, desce, põe à prova o que sabes e chega primeiro ao fim. Mas atenção: só avanças se acertares na pergunta!</p>
+        <div class="symbol-row" aria-label="Símbolos dos Pioneiros">
+          <div class="symbol"><span class="symbol-icon">◉</span><span>Gota de Água</span></div>
+          <div class="symbol"><span class="symbol-icon">✥</span><span>Rosa dos Ventos</span></div>
+          <div class="symbol"><span class="symbol-icon">⚒</span><span>Machada</span></div>
+          <div class="symbol"><span class="symbol-icon">♧</span><span>Icthus</span></div>
+        </div>
+        <div class="mini-rule"><span>01</span> LANÇA O DADO <i></i><span>02</span> ACERTA <i></i><span>03</span> AVANÇA</div>
+      </div>
+
+      <div class="entry-card">
+        <div class="card-kicker">ENTRA NO JOGO</div>
+        <h2>Preparado para o desafio?</h2>
+        <label for="playerName">O teu nome</label>
+        <input id="playerName" maxlength="16" autocomplete="nickname" placeholder="Ex.: Miguel" />
+        <button id="createBtn" class="btn btn-primary"><span>＋</span> Criar uma sala</button>
+        <div class="or-divider"><span></span> OU ENTRA NUMA SALA <span></span></div>
+        <label for="roomCode">Código da sala</label>
+        <div class="join-row"><input id="roomCode" maxlength="5" placeholder="ABCDE" autocapitalize="characters" /><button id="joinBtn" class="btn btn-dark">Entrar <span>→</span></button></div>
+        <p class="hint">Até 8 jogadores por sala. Partilha o código com os teus amigos.</p>
+        <div id="entryError" class="error-line" role="status"></div>
+      </div>
+    </section>
+
+    <section id="lobby" class="lobby-layout hidden">
+      <div class="lobby-heading">
+        <div><div class="eyebrow"><span class="eyebrow-line"></span> SALA DE JOGO</div><h1>Reúne a tua <em>equipa.</em></h1></div>
+        <button class="text-button" id="leaveLobby">← Sair da sala</button>
+      </div>
+      <div class="lobby-grid">
+        <div class="panel room-panel">
+          <div class="panel-top"><span class="panel-label">CÓDIGO PARA PARTILHAR</span><span class="status-pill"><i></i> À ESPERA</span></div>
+          <div class="room-code-line"><strong id="lobbyCode">-----</strong><button id="copyCode" class="copy-btn" title="Copiar código">⧉</button></div>
+          <p class="hint">Os teus amigos podem entrar usando este código.</p>
+          <div class="panel-divider"></div>
+          <div class="panel-top"><span class="panel-label">JOGADORES</span><span id="playerCount" class="count-pill">1 / 8</span></div>
+          <div id="lobbyPlayers" class="player-list"></div>
+          <div id="hostControls" class="host-controls"><button id="startBtn" class="btn btn-primary btn-wide">Começar partida <span>→</span></button><p class="hint center">É preciso haver pelo menos 2 jogadores.</p></div>
+          <div id="waitingHost" class="waiting-host hidden"><span class="loader-dot"></span> À espera que o anfitrião comece…</div>
+        </div>
+        <div class="rules-panel">
+          <div class="rules-icon">✦</div><div class="panel-label">COMO JOGAR</div>
+          <h3>Uma pergunta<br>vale cada avanço.</h3>
+          <div class="rule-item"><span>01</span><p>Na tua vez, lança o dado.</p></div>
+          <div class="rule-item"><span>02</span><p>Responde corretamente à pergunta para avançar.</p></div>
+          <div class="rule-item"><span>03</span><p>Sobe pelas escadas e foge às cobras.</p></div>
+          <div class="rule-item"><span>04</span><p>Chega à casa 50 e vence!</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="game" class="game-layout hidden">
+      <div class="game-head">
+        <div><div class="eyebrow"><span class="eyebrow-line"></span> DESAFIO PIONEIRO</div><h1>Até ao <em>fim da pista.</em></h1></div>
+        <div class="game-head-actions"><div class="game-code"><small>SALA</small><strong id="gameCode">-----</strong></div><button id="leaveGame" class="text-button">Sair <span>↗</span></button></div>
+      </div>
+      <div class="game-grid">
+        <div class="board-panel">
+          <div class="board-topline"><div><span class="board-label">TABULEIRO</span><span class="board-sub">50 casas · 1 objetivo</span></div><div class="legend"><span><i class="legend-ladder">↗</i> Escada</span><span><i class="legend-snake">↘</i> Cobra</span></div></div>
+          <div id="board" class="board" aria-label="Tabuleiro Sobe e Desce"></div>
+          <div class="board-footer"><span>PARTIDA <b>0</b></span><span class="finish-note">CHEGADA <b>50</b> <span>★</span></span></div>
+        </div>
+        <aside class="side-panel">
+          <div class="turn-card">
+            <div class="panel-top"><span class="panel-label">VEZ DE JOGAR</span><span id="turnStatus" class="turn-dot-label"><i></i> À ESPERA</span></div>
+            <div id="currentPlayer" class="current-player"><div class="avatar">?</div><div><strong>À espera…</strong><small>O jogo vai começar</small></div></div>
+            <div id="rollArea"><button id="rollBtn" class="btn btn-primary btn-wide" disabled>🎲 Lançar o dado</button><p id="rollHint" class="hint center">A aguardar a tua vez.</p></div>
+            <div id="watchingArea" class="watching-area hidden"><span class="loader-dot"></span> Espera pela tua vez…</div>
+          </div>
+          <div class="scores-card"><div class="panel-top"><span class="panel-label">CLASSIFICAÇÃO</span><span class="panel-label muted">PROGRESSO</span></div><div id="scoreList" class="score-list"></div></div>
+          <div class="tip-card"><span>✦ DICA PIONEIRA</span><p id="tipText">Saber, Querer e Agir: três ideias para transformar o mundo.</p></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div id="questionModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="questionTitle">
+    <div class="modal-backdrop"></div><div class="question-card">
+      <div class="question-top"><span class="question-tag">DESAFIO DE CONHECIMENTO</span><span id="diceResult" class="dice-result">🎲 4</span></div>
+      <div id="questionCategory" class="question-category">MÍSTICA DOS PIONEIROS</div>
+      <h2 id="questionTitle">Pergunta</h2>
+      <div id="answerOptions" class="answer-options"></div>
+      <button id="submitAnswer" class="btn btn-primary btn-wide" disabled>Confirmar resposta <span>→</span></button>
+      <p class="question-foot">Só uma resposta certa te permite avançar.</p>
+    </div>
+  </div>
+
+  <div id="resultToast" class="result-toast hidden"><div id="resultIcon" class="result-icon">✓</div><div><strong id="resultTitle">Muito bem!</strong><p id="resultText"></p></div></div>
+  <div id="winnerModal" class="modal hidden" role="dialog" aria-modal="true"><div class="modal-backdrop"></div><div class="winner-card"><div class="winner-star">★</div><div class="eyebrow centered">MISSÃO CUMPRIDA</div><h2><span id="winnerName">Um pioneiro</span><br><em>venceu o desafio!</em></h2><p>O caminho faz-se em equipa. Parabéns a todos!</p><button id="backToEntry" class="btn btn-primary btn-wide">Jogar novamente</button></div></div>
+
+  <footer><span>DESAFIO PIONEIRO</span><span>Feito para jogar em equipa · III Secção</span></footer>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
